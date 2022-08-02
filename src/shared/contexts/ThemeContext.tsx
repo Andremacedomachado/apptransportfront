@@ -1,7 +1,7 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import {ThemeProvider } from "@mui/material";
-import {Box} from '@material-ui/system'
-import { DarkTheme, LightTheme } from "../themes";
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { ThemeProvider } from '@mui/material';
+import { Box } from '@material-ui/system';
+import { DarkTheme, LightTheme } from '../themes';
 
 interface IThemeContextData {
     themeName: 'light' | 'dark';
@@ -12,17 +12,18 @@ interface IThemeProviderProps {
     children: React.ReactNode
 }
 
-const ThemeContext = createContext({} as IThemeContextData)
+const ThemeContext = createContext({} as IThemeContextData);
 
 export const useAppThemeContext = () => {
     return useContext(ThemeContext);
-}
+};
 
+// eslint-disable-next-line react/prop-types
 export const AppThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
     const [themeName, setThemeName] = useState<'light' | 'dark'>('light');
 
     const toggleTheme = useCallback(() => {
-        setThemeName(oldThemeName => oldThemeName === 'light' ? 'dark' : 'light')
+        setThemeName(oldThemeName => oldThemeName === 'light' ? 'dark' : 'light');
     }, []);
 
     const theme = useMemo(() => {
@@ -41,4 +42,4 @@ export const AppThemeProvider: React.FC<IThemeProviderProps> = ({ children }) =>
         </ThemeContext.Provider>
     );
 
-}
+};

@@ -1,5 +1,5 @@
-import { createTheme } from '@mui/material'
-import { brown, orange } from '@mui/material/colors'
+import { createTheme } from '@mui/material';
+import { brown, orange } from '@mui/material/colors';
 
 export const DarkTheme = createTheme(
     {
@@ -24,4 +24,4 @@ export const DarkTheme = createTheme(
             }
         }
     }
-)
+);
