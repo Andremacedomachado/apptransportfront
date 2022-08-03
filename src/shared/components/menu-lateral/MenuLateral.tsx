@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Box, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
-import { useDrawerContext } from '../../contexts';
+import { useAppThemeContext, useDrawerContext } from '../../contexts';
 
 
 
@@ -44,8 +44,9 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
 
+    const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
+    const {toggleTheme} = useAppThemeContext();
 
     return (
         <>
@@ -71,6 +72,16 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
                                     onClick={smDown ? toggleDrawerOpen : undefined}
                                 />
                             ))}
+                        </List>
+                    </Box>
+                    <Box>
+                        <List component='nav'>
+                            <ListItemButton  onClick={toggleTheme}>
+                                <ListItemIcon>
+                                    <Icon>dark_mode</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary='alternar tema' />
+                            </ListItemButton>
                         </List>
                     </Box>
                 </Box>
