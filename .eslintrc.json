@@ -38,6 +38,6 @@
             "always"
         ],
         "react/react-in-jsx-scope": "off",
-        "react/props-types": "off"
+        "react/prop-types": 0
     }
 }
