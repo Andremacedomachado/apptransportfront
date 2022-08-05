@@ -1,5 +1,6 @@
 import { Box, Button, Icon, Paper, TextField, useTheme } from '@mui/material';
 
+import { Environmenrt } from '../../environments';
 
 interface IBarraDeListagemProps {
     textoDeBusca?: string;
@@ -37,7 +38,7 @@ export const BarraDeListagem: React.FC<IBarraDeListagemProps> = ({
                 size='small'
                 value={textoDeBusca}
                 onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
-                placeholder='Pesquizar...'
+                placeholder={Environmenrt.INPUT_DE_BUSCA}
             />)}
 
             <Box flex={1} display='flex' justifyContent='end'>
