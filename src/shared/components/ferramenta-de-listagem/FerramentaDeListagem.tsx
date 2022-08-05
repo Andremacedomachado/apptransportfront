@@ -2,7 +2,7 @@ import { Box, Button, Icon, Paper, TextField, useTheme } from '@mui/material';
 
 import { Environmenrt } from '../../environments';
 
-interface IBarraDeListagemProps {
+interface IFerramentaDeListagem {
     textoDeBusca?: string;
     mostrarInputBusca: boolean;
     aoMudarTextoDeBusca?: (novoTexto: string) => void;
@@ -13,7 +13,7 @@ interface IBarraDeListagemProps {
 }
 
 
-export const BarraDeListagem: React.FC<IBarraDeListagemProps> = ({
+export const FerramentaDeListagem: React.FC<IFerramentaDeListagem> = ({
     textoDeBusca = '',
     mostrarInputBusca = false,
     aoMudarTextoDeBusca,
