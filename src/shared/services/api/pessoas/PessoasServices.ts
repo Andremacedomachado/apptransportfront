@@ -26,7 +26,7 @@ type IPessoasComTotalCount = {
 
 const getAll = async (page = 1, filter = ''): Promise<IPessoasComTotalCount | Error> => {
     try {
-        const urlRelativa = `/pessoas?_page=${page}}&_limit=${Environmenrt.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
+        const urlRelativa = `/pessoas?_page=${page}&_limit=${Environmenrt.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
         const { data, headers } = await Api.get(urlRelativa);
         if (data) {
             return {
