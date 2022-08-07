@@ -2,7 +2,7 @@ import { Api } from '../axios-config';
 
 import { Environmenrt } from '../../../environments';
 
-interface IListagemPessoas {
+export interface IListagemPessoas {
     id: number;
     email: string,
     cidadeId: number,
@@ -10,7 +10,7 @@ interface IListagemPessoas {
 
 }
 
-interface IDetalhePessoas {
+export interface IDetalhePessoas {
     id: number;
     email: string,
     cidadeId: number,
