@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { IListagemPessoas, PessoasServices } from '../../shared/services/api/pessoas/PessoasServices';
 import { FerramentaDeListagem } from '../../shared/components';
@@ -13,6 +13,7 @@ export const Pessoas = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [totalCount, setTotalCount] = useState(0);
 
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const busca = useMemo(() => {
@@ -43,6 +44,22 @@ export const Pessoas = () => {
         });
     }, [busca, pagina]);
 
+    const handleDelete = (id: number) => {
+        if (confirm('Deseja realmente apagar o registro?')) {
+            PessoasServices.deleteById(id)
+                .then((result) => {
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    }
+                    else {
+                        setRows((oldRows) => [
+                            ...oldRows.filter(oldRow => oldRow.id !== id)
+                        ]);
+                        alert('Registro excluido com sucesso');
+                    }
+                });
+        }
+    };
 
     return (
         <LayoutBaseDePagina
@@ -51,6 +68,7 @@ export const Pessoas = () => {
                 < FerramentaDeListagem
                     mostrarInputBusca
                     textoBotaoNovo='Nova'
+                    aoClicarBotaoNovo={()=> navigate('/pessoas/detalhe/nova')}
                     textoDeBusca={busca}
                     aoMudarTextoDeBusca={texto => setSearchParams({ busca: texto, pagina: '1' }, { replace: true })}
                 />
@@ -69,7 +87,15 @@ export const Pessoas = () => {
 
                         {rows.map(row => (
                             <TableRow key={row.id}>
-                                <TableCell>ações</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => handleDelete(row.id)}>
+                                        <Icon>delete</Icon>
+                                    </IconButton>
+                                    <IconButton onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}>
+                                        <Icon>edit</Icon>
+                                    </IconButton>
+
+                                </TableCell>
                                 <TableCell>{row.nomeCompleto}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                             </TableRow>
