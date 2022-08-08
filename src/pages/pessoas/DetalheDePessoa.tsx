@@ -1,9 +1,19 @@
-import { LinearProgress } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Form } from '@unform/web';
+
+import { PessoasServices } from '../../shared/services/api/pessoas/PessoasServices';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
-import { PessoasServices } from '../../shared/services/api/pessoas/PessoasServices';
+import { VTextField } from '../../shared/forms';
+import { FormHandles } from '@unform/core';
+
+interface IFormData {
+    email: string,
+    cidadeId: number,
+    nomeCompleto: string
+}
 
 export const DetalheDePessoa = () => {
     const { id = 'nova' } = useParams<'id'>();
@@ -12,9 +22,10 @@ export const DetalheDePessoa = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [nome, setNome] = useState('');
 
+    const formRef = useRef<FormHandles>(null);
     useEffect(() => {
+        setIsLoading(true);
         if (id !== 'nova') {
-            setIsLoading(true);
             PessoasServices.getById(Number(id))
                 .then((result) => {
                     setIsLoading(false);
@@ -24,15 +35,46 @@ export const DetalheDePessoa = () => {
                     }
                     else {
                         setNome(result.nomeCompleto);
-                        console.log(result);
+                        formRef.current?.setData(result);
                     }
                 });
+        }
+        else {
+            formRef.current?.setData({
+                nomeCompleto: '',
+                email: '',
+                cidadeId: '',
+            });
+            setIsLoading(false);
         }
     }, [id]);
 
 
-    const handleSave = () => {
-        console.log('Save');
+    const handleSave = (dados: IFormData) => {
+        setIsLoading(true);
+        if (id === 'nova') {
+            PessoasServices.create(dados)
+                .then((result) => {
+                    setIsLoading(false);
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    }
+                    else {
+                        navigate(`/pessoas/detalhe/${result}`);
+                    }
+                });
+        }
+        else {
+            PessoasServices.updateById(Number(id), { id: Number(id), ...dados })
+                .then((result) => {
+                    setIsLoading(false);
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    }
+
+                });
+        }
+        console.log(dados);
     };
     const handleDelete = (id: number) => {
         if (confirm('realmente deseja apagar o registro?')) {
@@ -58,15 +100,63 @@ export const DetalheDePessoa = () => {
                     mostrarBotaoApagar={id !== 'nova'}
                     mostrarBotaoSalvarEFechar
 
-                    aoClicarBotaoSalvar={() => handleSave()}
-                    aoClicarBotaoSalvarEFechar={() => handleSave()}
+                    aoClicarBotaoSalvar={() => formRef.current?.submitForm()}
+                    aoClicarBotaoSalvarEFechar={() => formRef.current?.submitForm()}
                     aoClicarBotaoApagar={() => handleDelete(Number(id))}
                     aoClicarBotaoNovo={() => navigate('/pessoas/detalhe/nova')}
                     aoClicarBotaoVoltar={() => navigate('/pessoas')}
 
                 />}
         >
-            {(id !== 'nova' && isLoading) && <LinearProgress variant='indeterminate'></LinearProgress>}
+
+
+            <Form ref={formRef} onSubmit={handleSave}>
+                <Box margin={1} padding={1} display='flex' flexDirection='column' component={Paper} variant='outlined'>
+                    <Grid container spacing={2} padding={2}>
+
+                        {isLoading && <Grid item xs={12} >
+                            <LinearProgress variant='indeterminate' />
+                        </Grid>}
+
+                        <Grid item xs={12}>
+                            <Typography variant='h6'>Geral</Typography>
+                        </Grid>
+
+                        <Grid container item direction='row'>
+                            <Grid item xs={12} md={6} lg={4} xl={2}>
+                                <VTextField
+                                    label='Nome completo'
+                                    name='nomeCompleto'
+                                    fullWidth
+                                    disabled={isLoading}
+                                    onChange={e => setNome(e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container item direction='row'>
+                            <Grid item xs={12} md={6} lg={4} xl={2}>
+                                <VTextField
+                                    label='Email'
+                                    name='email'
+                                    fullWidth
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container item direction='row'>
+                            <Grid item xs={12} md={6} lg={4} xl={2}>
+                                <VTextField
+                                    label='Cidade'
+                                    name='cidadeId'
+                                    fullWidth
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                </Box>
+            </Form>
 
         </LayoutBaseDePagina>
     );
