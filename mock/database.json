@@ -43,24 +43,6 @@
       "cidadeId": 2
     },
     {
-      "id": 12,
-      "email": "jorge@gmail.com",
-      "cidadeId": 2,
-      "nomeCompleto": "Jorge Silva"
-    },
-    {
-      "id": 14,
-      "email": "jorge@gmail.com",
-      "cidadeId": 2,
-      "nomeCompleto": "Jorge Silva"
-    },
-    {
-      "id": 15,
-      "email": "jorge@gmail.com",
-      "cidadeId": 2,
-      "nomeCompleto": "Jorge Silva"
-    },
-    {
       "nomeCompleto": "maria julieta",
       "email": "mariajulieta@gmail.com",
       "cidadeId": "2",
@@ -71,6 +53,18 @@
       "email": "juana@gmail.com",
       "cidadeId": "3",
       "id": 17
+    },
+    {
+      "nomeCompleto": "daniela",
+      "email": "daniela@gmail.com",
+      "cidadeId": "1",
+      "id": 18
+    },
+    {
+      "nomeCompleto": "andre",
+      "cidadeId": 3,
+      "email": "andre@gmail.com",
+      "id": 19
     }
   ]
 }
