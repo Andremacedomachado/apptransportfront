@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import * as yup from 'yup';
 
 import { PessoasServices } from '../../shared/services/api/pessoas/PessoasServices';
+import { AutoCompleteCidade } from './components/AutoCompleteCidade';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { IVFormErrors, VTextField } from '../../shared/forms';
 import { LayoutBaseDePagina } from '../../shared/layouts';
@@ -166,12 +167,7 @@ export const DetalheDePessoa = () => {
                         </Grid>
                         <Grid container item direction='row'>
                             <Grid item xs={12} md={6} lg={4} xl={2}>
-                                <VTextField
-                                    label='Cidade'
-                                    name='cidadeId'
-                                    fullWidth
-                                    disabled={isLoading}
-                                />
+                                <AutoCompleteCidade isExternalLoading={isLoading} />
                             </Grid>
                         </Grid>
                     </Grid>

@@ -66,5 +66,19 @@
       "email": "andre@gmail.com",
       "id": 19
     }
+  ],
+  "cidades": [
+    {
+      "id": 1,
+      "nome": "Jequie"
+    },
+    {
+      "nome": "Ibirataia",
+      "id": 2
+    },
+    {
+      "nome": "Ipiau",
+      "id": 3
+    }
   ]
 }
