@@ -1,8 +1,9 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { useField } from '@unform/core';
-import { useEffect, useMemo, useState } from 'react';
-import { useDebounce } from '../../../shared/hooks';
+
 import { CidadesServices } from '../../../shared/services/api/cidades/CidadesServices';
+import { useDebounce } from '../../../shared/hooks';
 
 
 type TAutoCompleteOption = {
@@ -20,7 +21,7 @@ export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExter
     const [isLoading, setIsLoading] = useState(true);
     const [busca, setBusca] = useState('');
 
-    const { fieldName, registerField, defaultValue, error, clearError } = useField('cidadeId');
+    const { fieldName, registerField} = useField('cidadeId');
 
     useEffect(() => {
         registerField({
